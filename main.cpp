@@ -1,49 +1,60 @@
 #include <iostream>
 #include <string>
-#define CURL_STATICLIB
-
-#include "curl/curl.h"
-
-#ifdef _DEBUG
-#pragma comment (lib, "curl/libcurl_a_debug.lib")
-#else
-#pragma comment (lib, "curl/libcurl_a.lib")
-#endif
-
-#pragma comment (lib, "Normaliz.lib")
-#pragma comment (lib, "Ws2_32.lib")
-#pragma comment (lib, "Wldap32.lib")
-#pragma comment (lib, "Crypt32.lib")
-#pragma comment (lib, "advapi32.lib")
+#include <curl/curl.h>
 
 using namespace std;
 
-static size_t my_write(void* buffer, size_t size, size_t nmemb, void* param)
-{
-	std::string& text = *static_cast<std::string*>(param);
-	size_t totalsize = size * nmemb;
-	text.append(static_cast<char*>(buffer), totalsize);
-	return totalsize;
-}
+class API {         //klasa ³¹cz¹ca z API
+private:
+    string apiKey;      //zmienna klucza
+    string url;         //zmienna stronny
+    string response;    //zmienna zwracaj¹ca wartoœci
 
-int main()
-{
-	std::string result;
-	CURL* curl;
-	CURLcode res;
-	curl_global_init(CURL_GLOBAL_DEFAULT);
-	curl = curl_easy_init();
-	if (curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "https://tcno.co/hello.txt");
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_write);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
-		res = curl_easy_perform(curl);
-		curl_easy_cleanup(curl);
-		if (CURLE_OK != res) {
-			std::cerr << "CURL error: " << res << '\n';
-		}
-	}
-	curl_global_cleanup();
-	std::cout << result << "\n\n";
+    //  funkcj¹ zwrotna, która jest u¿ywana przez libcurl do obs³ugi danych otrzymanych z ¿¹dania HTTP
+    static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
+        ((string*)userp)->append((char*)contents, size * nmemb);
+        return size * nmemb;
+    }
+
+public:
+    API(const string& key) : apiKey(key), url("https://openexchangerates.org/api/latest.json?app_id=" + key) {} //konstruktor klasy
+
+    bool fetchRates() {                                                         //funkcja wysy³aj¹ca rz¹dania i odbieraj¹ca kursy
+        CURL* curl;                                                             //WskaŸnik na obiekt CURL, który reprezentuje sesjê libcurl
+        CURLcode res;                                                           //Zmienna przechowuj¹ca kod zwrotny z funkcji libcurl
+        curl = curl_easy_init();                                                //Inicjalizacja sekcji libcurl
+        if (curl) {                                                             //srawdzenie poprawnoœci inicjalizacji(niepoprawna kiedy wartoœæ to null
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());                   //Ustawia URL, do którego zostanie wys³ane ¿¹danie
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);       //Ustawia funkcjê zwrotn¹, która bêdzie wywo³ywana za ka¿dym razem, gdy libcurl odbierze dane.
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);               // Ustawia wskaŸnik na dane u¿ytkownika
+
+            res = curl_easy_perform(curl);                                      //Wykonuje operacjê transferu
+            if (res != CURLE_OK) {                                              //sprawdzenie czy transfer danych siê powiód³ 
+                cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;      //zwraca opis b³êdu w formie tekstowej
+                curl_easy_cleanup(curl);                                        // Zwalnia wszystkie zasoby zwi¹zane z sesj¹ curl
+                return false;
+            }
+            curl_easy_cleanup(curl);
+            return true;
+        }
+        return false;
+    }
+
+    string getResponse() const {                                                //metoda wywo³uj¹ca przechwycone dane
+        return response;
+    }
+};
+
+int main() {
+    string apiKey = "13c8bdeb1c144ec3b3f4422ab3a04f9a";             //podawanie APIkey
+    API objapi(apiKey);                                             //stworzenie obiektu do przechwycenia danych
+
+    if (objapi.fetchRates()) {                                      //sprawdzenie po³¹czenia
+        cout << "Response data: " << objapi.getResponse() << endl;  //wypisanie danych
+    }
+    else {
+        cout << "Failed to fetch exchange rates." << endl;          //wypisanie b³êdu
+    }
+
+    return 0;
 }
