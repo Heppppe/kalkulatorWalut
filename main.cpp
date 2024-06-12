@@ -3,6 +3,7 @@
 #include <locale.h>
 
 #include "api.h"
+#include "menu.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ int main() {
 
     if (objapi.fetchRates()) {                                      //sprawdzenie po³¹czenia
         //cout << "Response data: " << objapi.getResponse() << endl;  //wypisanie danych
+        menuLoop();                                                 //Przejœcie do menu
     }
     else {
         cout << "Wyst¹pi³ b³¹d przy pobieraniu." << endl;          //wypisanie b³êdu
