@@ -11,8 +11,8 @@ bool API::fetchRates() {                                                        
     CURL* curl;                                                             //WskaŸnik na obiekt CURL, który reprezentuje sesjê libcurl
     CURLcode res;                                                           //Zmienna przechowuj¹ca kod zwrotny z funkcji libcurl
     curl = curl_easy_init();                                                //Inicjalizacja sekcji libcurl
-    if (curl) {                                                             //srawdzenie poprawnoœci inicjalizacji(niepoprawna kiedy wartoœæ to null
-        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());                   //Ustawia URL, do którego zostanie wys³ane ¿¹danie
+    if (curl) {                                                             //sprawdzenie poprawnoœci inicjalizacji (niepoprawna kiedy wartoœæ to null)
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());                   //Ustawia URL do którego zostanie wys³ane ¿¹danie
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);       //Ustawia funkcjê zwrotn¹, która bêdzie wywo³ywana za ka¿dym razem, gdy libcurl odbierze dane.
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);               // Ustawia wskaŸnik na dane u¿ytkownika
 
