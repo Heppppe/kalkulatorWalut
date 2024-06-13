@@ -2,7 +2,7 @@
 
 JSON::JSON() {}
 
-void JSON::parse(const string& response) {
+void JSON::jparse(const string& response) {
     jsonData = nlohmann::json::parse(response);  // Parsuje dane JSON z odpowiedzi API
 }
 

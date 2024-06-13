@@ -12,7 +12,7 @@ private:
 
 public:
     JSON();  // Konstruktor
-    void parse(const string& response);  // Metoda do parsowania danych JSON
+    void jparse(const string& response);  // Metoda do parsowania danych JSON
     void displayRates() const;  // Metoda do wyœwietlania kursów walut
     double getRate(const string& currency) const;  // Metoda do uzyskania kursu waluty
 };

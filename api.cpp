@@ -24,7 +24,7 @@ bool API::fetchRates() {
             return false;  // Zwraca false w przypadku b³êdu
         }
         curl_easy_cleanup(curl);  // Zwalnia zasoby zwi¹zane z sesj¹ curl
-        jsonParser.parse(response);  // Parsuje odpowiedŸ z API
+        jsonParser.jparse(response);  // Parsuje odpowiedŸ z API
         return true;  // Zwraca true w przypadku powodzenia
     }
     return false;  // Zwraca false w przypadku b³êdu inicjalizacji
@@ -35,5 +35,5 @@ string API::getResponse() const {
 }
 
 JSON& API::getJSONParser() {
-    return jsonParser;  // Zwraca referencjê do obiektu JSON
+    return jsonParser;  // Zwraca referencjê do specjalnego obiektu json do parsowania
 }
