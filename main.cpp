@@ -7,14 +7,14 @@
 using namespace std;
 
 // Definicja globalnego obiektu API
-API api("13c8bdeb1c144ec3b3f4422ab3a04f9a");
+API apiobj("13c8bdeb1c144ec3b3f4422ab3a04f9a");
 
 int main() {
     setlocale(LC_CTYPE, "Polish");  // Pozwala wyœwietlaæ polskie znaki w konsoli
 
     cout << "Pobieranie aktualnych kursów..." << endl;
 
-    if (api.fetchRates()) {  // Pobiera kursy walut i sprawdza powodzenie operacji
+    if (apiobj.fetchRates()) {  // Pobiera kursy walut i sprawdza powodzenie operacji
         menuLoop();  // Przejœcie do menu
     }
     else {
