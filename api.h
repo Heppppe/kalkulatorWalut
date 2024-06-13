@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
+#include "JSON.h"
+#include <curl/curl.h>
+
 #define CURL_STATICLIB
-
-#include "curl/curl.h"
-
 #ifdef _DEBUG
 #pragma comment (lib, "curl/libcurl_a_debug.lib")
 #else
@@ -20,19 +20,21 @@
 using namespace std;
 
 
-class API {         //klasa ³¹cz¹ca z API
+class API {
 private:
-    string apiKey;      //zmienna klucza
-    string url;         //zmienna stronny
-    string response;    //zmienna zwracaj¹ca wartoœci
+    string apiKey;      // Przechowuje klucz API
+    string url;         // Przechowuje URL API
+    string response;    // Przechowuje odpowiedŸ z API w formie stringa
+    JSON jsonParser;    // Obiekt klasy JSON do parsowania danych
 
-    //  funkcj¹ zwrotna, która jest u¿ywana przez libcurl do obs³ugi danych otrzymanych z ¿¹dania HTTP
-    static size_t WriteCallback(void*, size_t, size_t, void*);
+    static size_t WriteCallback(void*, size_t, size_t, void*);  // Funkcja zwrotna do zapisu danych
 
 public:
-    API(const string&); //konstruktor klasy
+    API(const string& key); // Konstruktor klasy
 
-    bool fetchRates();
+    bool fetchRates();  // Metoda do pobierania kursów walut
 
-    string getResponse() const;
+    string getResponse() const;  // Metoda zwracaj¹ca odpowiedŸ w formie stringa
+
+    JSON& getJSONParser();  // Publiczna metoda dostêpu do obiektu JSON
 };

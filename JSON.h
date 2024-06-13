@@ -1,23 +1,18 @@
 #pragma once
+
 #include <string>
-#include <vector>
 #include <iostream>
 #include <json.hpp>
 
-#ifndef JSON_PARSER_H
-#define JSON_PARSER_H
-
-using namespace std; // Dyrektywa using do namespace std
+using namespace std;
 
 class JSON {
 private:
-    nlohmann::json jsonData; // Obiekt json u¿ywany do przechowywania danych JSON
+    nlohmann::json jsonData;  // Obiekt json u¿ywany do przechowywania danych JSON
 
 public:
-    // Konstruktor
-    JSON();
-
+    JSON();  // Konstruktor
+    void parse(const string& response);  // Metoda do parsowania danych JSON
+    void displayRates() const;  // Metoda do wyœwietlania kursów walut
+    double getRate(const string& currency) const;  // Metoda do uzyskania kursu waluty
 };
-
-#endif
-
