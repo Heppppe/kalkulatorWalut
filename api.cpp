@@ -15,7 +15,7 @@ bool API::fetchRates() {
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());  // Ustawia URL do którego zostanie wys³ane ¿¹danie
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);  // Ustawia funkcjê zwrotn¹
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);  // Ustawia wskaŸnik na dane u¿ytkownika
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);  // Ustawia wskaŸnik na dane
 
         res = curl_easy_perform(curl);  // Wykonuje operacjê transferu
         if (res != CURLE_OK) {
