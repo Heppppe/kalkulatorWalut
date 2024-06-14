@@ -23,7 +23,7 @@ void menuLoop() {
         system("cls");  // Czyœci konsolê
         displayMenu();
         if (misinput) {
-            cout << endl << "Nieprawidlowa opcja";  // Informuje o nieprawid³owej opcji
+            cout << endl << "Nieprawid³owa opcja";  // Informuje o nieprawid³owej opcji
             misinput = false;
         }
 
@@ -31,33 +31,15 @@ void menuLoop() {
 
         switch (ch) {
         case '1': {
-            // Przeliczanie pieniêdzy
-            string currency;
-            double amount;
-            cout << "Podaj walutê (np. USD, EUR): ";
-            cin >> currency;  // Pobiera walutê od u¿ytkownika
-            cout << "Podaj kwotê: ";
-            cin >> amount;  // Pobiera kwotê od u¿ytkownika
-            double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
-            if (rate != 0.0) {
-                cout << "Przeliczona kwota: " << (amount * rate) << endl;  // Wyœwietla przeliczon¹ kwotê
-            }
-            else {
-                cout << "Nieprawid³owa waluta lub brak kursu." << endl;  // Informuje o b³êdnej walucie lub braku kursu
-            }
-            system("pause");  // Pauza przed wyczyszczeniem konsoli
+            exchangeCurrency();
             break;
         }
         case '2': {
-            // Wyœwietl wszystkie kursy
-            apiobj.getJSONParser().displayRates();  // Wyœwietla kursy walut
-            system("pause");  // Pauza przed wyczyszczeniem konsoli
+            displayCurrencies();
             break;
         }
         case '3': {
-            // Wyœwietl instrukcjê
-            cout << "Instrukcja u¿ytkownika..." << endl;  // Wyœwietla instrukcjê
-            system("pause");  // Pauza przed wyczyszczeniem konsoli
+            displayInstructions();
             break;
         }
         case '4':
@@ -67,4 +49,36 @@ void menuLoop() {
             misinput = true;  // Ustawia flagê nieprawid³owego wejœcia
         }
     }
+}
+
+void exchangeCurrency()
+{
+    string currency;
+    double amount;
+    cout << "Podaj walutê (np. USD, EUR): ";
+    cin >> currency;  // Pobiera walutê od u¿ytkownika
+    cout << "Podaj kwotê: ";
+    cin >> amount;  // Pobiera kwotê od u¿ytkownika
+    double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
+    if (rate != 0.0) {
+        cout << "Przeliczona kwota: " << (amount * rate) << endl;  // Wyœwietla przeliczon¹ kwotê
+    }
+    else {
+        cout << "Nieprawid³owa waluta lub brak kursu." << endl;  // Informuje o b³êdnej walucie lub braku kursu
+    }
+    system("pause");  // Pauza przed wyczyszczeniem konsoli
+}
+
+void displayCurrencies()
+{
+    apiobj.getJSONParser().displayRates();  // Wyœwietla kursy walut
+    cout << "Wciœnij dowolny przycisk..." << endl;
+    _getch();               // Pauza przed wyczyszczeniem konsoli
+}
+
+void displayInstructions()
+{
+    cout << "Instrukcja u¿ytkownika..." << endl;  // Wyœwietla instrukcjê
+    cout << "Wciœnij dowolny przycisk..." << endl;
+    _getch();               // Pauza przed wyczyszczeniem konsoli
 }

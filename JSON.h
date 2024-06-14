@@ -2,7 +2,8 @@
 
 #include <string>
 #include <iostream>
-#include <json.hpp>
+//#include <json.hpp>
+#include "include/json.hpp"     //wersja powyzej mi sie nie kompiluje
 
 using namespace std;
 

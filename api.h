@@ -1,13 +1,15 @@
 #include <iostream>
 #include <string>
 #include "JSON.h"
-#include <curl/curl.h>
-
+//#include <curl/curl.h>     
 #define CURL_STATICLIB
+
+#include "include/curl/curl.h"          //w nawiasach <> mi sie nie kompiluje
+
 #ifdef _DEBUG
-#pragma comment (lib, "curl/libcurl_a_debug.lib")
+#pragma comment (lib, "include/curl/libcurl_a_debug.lib")
 #else
-#pragma comment (lib, "curl/libcurl_a.lib")
+#pragma comment (lib, "include/curl/libcurl_a.lib")
 #endif
 
 #pragma comment (lib, "Normaliz.lib")
