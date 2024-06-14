@@ -19,3 +19,9 @@ double JSON::getRate(const string& currency) const {
     }
     return 0.0;  // Zwraca 0.0, jeœli waluta nie istnieje
 }
+
+void JSON::exchangeToAllCurrencies(double dollars) const {
+    for (auto it = jsonData["rates"].begin(); it != jsonData["rates"].end(); ++it) {  // Iteruje przez kursy walut
+        cout << dollars * (double)it.value() << " " << it.key() << endl;  // Wyœwietla wartosc wpisanej kwoty we wszystkich walutach
+    }
+}

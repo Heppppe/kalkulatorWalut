@@ -40,3 +40,5 @@ public:
 
     JSON& getJSONParser();  // Publiczna metoda dostêpu do obiektu JSON
 };
+
+extern API apiobj;

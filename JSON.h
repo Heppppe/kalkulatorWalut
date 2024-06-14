@@ -15,5 +15,6 @@ public:
     JSON();  // Konstruktor
     void jparse(const string& response);  // Metoda do parsowania danych JSON
     void displayRates() const;  // Metoda do wyœwietlania kursów walut
+    void exchangeToAllCurrencies(double) const;
     double getRate(const string& currency) const;  // Metoda do uzyskania kursu waluty
 };

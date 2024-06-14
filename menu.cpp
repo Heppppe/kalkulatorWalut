@@ -6,7 +6,6 @@
 using namespace std;
 
 // Deklaracja zewnêtrzna globalnego obiektu API
-extern API apiobj;
 
 void displayMenu() {
     cout << "Wybierz (1-4):" << endl;
@@ -31,7 +30,7 @@ void menuLoop() {
 
         switch (ch) {
         case '1': {
-            exchangeCurrency();
+            calculateCurrency();
             break;
         }
         case '2': {
@@ -49,31 +48,6 @@ void menuLoop() {
             misinput = true;  // Ustawia flagê nieprawid³owego wejœcia
         }
     }
-}
-
-void exchangeCurrency()
-{
-    string currency;
-    double amount;
-    cout << "Podaj walutê (np. USD, EUR): ";
-    cin >> currency;  // Pobiera walutê od u¿ytkownika
-    cout << "Podaj kwotê: ";
-    cin >> amount;  // Pobiera kwotê od u¿ytkownika
-    double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
-    if (rate != 0.0) {
-        cout << "Przeliczona kwota: " << (amount * rate) << endl;  // Wyœwietla przeliczon¹ kwotê
-    }
-    else {
-        cout << "Nieprawid³owa waluta lub brak kursu." << endl;  // Informuje o b³êdnej walucie lub braku kursu
-    }
-    system("pause");  // Pauza przed wyczyszczeniem konsoli
-}
-
-void displayCurrencies()
-{
-    apiobj.getJSONParser().displayRates();  // Wyœwietla kursy walut
-    cout << "Wciœnij dowolny przycisk..." << endl;
-    _getch();               // Pauza przed wyczyszczeniem konsoli
 }
 
 void displayInstructions()

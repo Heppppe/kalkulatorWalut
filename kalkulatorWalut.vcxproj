@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="api.cpp" />
+    <ClCompile Include="CurrencyCalculations.cpp" />
     <ClCompile Include="JSON.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
