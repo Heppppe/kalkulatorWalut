@@ -6,40 +6,101 @@
 #include "JSON.h"
 #include <cctype>
 
-using namespace std;
+
+#define KEY_LEFT 1
+#define KEY_RIGHT 2
 
 void calculateCurrency()
 {
+    bool calculating = true;
     bool misinput = false;
-    while (true)
+    int selected = 1;
+    string amount = "1";
+    string currency = "EUR";
+    while (calculating)
     {
         system("cls");
         if (misinput) {
             cout << "Nieprawid³owa waluta lub brak kursu." << endl;
             misinput = false;
         }
-        double amount;
-        string currency;
-        cout << "Wpisz 'm', ¿eby powróciæ do menu" << endl;
-        cout << "W jakies walucie masz pieni¹dze? (np. EUR): ";
-        cin >> currency;
-        if (currency == "m")
-            break;
+        transform(currency.begin(), currency.end(), currency.begin(), [](unsigned char c) { return std::toupper(c); });
+        calculateUI(selected, amount, currency);
 
-        transform(currency.begin(), currency.end(), currency.begin(),[](unsigned char c) { return std::toupper(c); });
-        cout << "Ile pieniêdzy chcesz wymieniæ ? (np. 20) : ";
-        cin >> amount;
-        double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
-        if (rate == 0.0) {
-            misinput = true;
-            continue;
+
+        char input = _getch();
+        char side;
+        switch (selected)
+        {
+        case 3:
+            switch (input)
+            {
+            case 'à':
+                side = _getch();
+                if (side == 75)
+                    selected = 2;
+                break;
+            default:
+                misinput = policzButton(stod(amount), currency);
+            }
+            break;
+        case 2:
+            switch (input)
+            {
+            case 'à':
+                side = _getch();
+                if (side == 77)
+                    selected = 3;
+                if (side == 75)
+                    selected = 1;
+                break;
+            case '\b':
+                if (currency.size() > 0)
+                    currency.pop_back();
+                break;
+            default:
+                if(currency.size() < 5)
+                    currency += input;
+            }
+            break;
+        case 1:
+            switch (input)
+            {
+            case 'à':
+                side = _getch();
+                if (side == 77)
+                    selected = 2;
+                break;
+            case '\b':
+                if(amount.size() > 0)
+                    amount.pop_back();
+                break;
+            default:
+                if(amount.size() < 9)
+                    amount += input;
+            }
+            break;
+        case 0:
+            selected = 1;
+            currency = "EUR";
+            if (input != 't')
+                calculating = false;
         }
-        cout << endl << amount << " " << currency << " jest warte: " << endl;
-        apiobj.getJSONParser().exchangeToAllCurrencies(amount / rate);
-        
-        cout << "Wciœnij dowolny przycisk..." << endl;
-        _getch();               // Pauza przed wyczyszczeniem konsoli
     }
+}
+
+bool policzButton(double amount, string currency)
+{
+    double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
+    if (rate == 0.0) {
+        return true;
+    }
+    cout << endl << amount << " " << currency << " jest warte: " << endl;
+    apiobj.getJSONParser().exchangeToAllCurrencies(amount / rate);
+
+    cout << "Czy chcesz policzyæ ponownie? (t/n) " << endl;
+    _getch();               // Pauza przed wyczyszczeniem konsoli
+    return false;
 }
 
 void displayCurrencies()

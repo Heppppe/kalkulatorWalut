@@ -13,13 +13,13 @@ int main() {
     setlocale(LC_CTYPE, "Polish");  // Pozwala wyœwietlaæ polskie znaki w konsoli
 
     cout << "Pobieranie aktualnych kursów..." << endl;
-
+    
     if (apiobj.fetchRates()) {  // Pobiera kursy walut i sprawdza powodzenie operacji
         menuLoop();  // Przejœcie do menu
     }
     else {
         cout << "Wyst¹pi³ b³¹d przy pobieraniu." << endl;  // Informuje o b³êdzie podczas pobierania
     }
-
+    
     return 0;
 }
