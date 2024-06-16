@@ -42,6 +42,8 @@ void calculateCurrency()
                 break;
             default:
                 misinput = policzButton(stod(amount), currency);
+                if (misinput == 1)
+                    calculating = false;
             }
             break;
         case 2:
@@ -89,18 +91,20 @@ void calculateCurrency()
     }
 }
 
-bool policzButton(double amount, string currency)
+int policzButton(double amount, string currency)
 {
     double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
     if (rate == 0.0) {
-        return true;
+        return -1;
     }
     cout << endl << amount << " " << currency << " jest warte: " << endl;
     apiobj.getJSONParser().exchangeToAllCurrencies(amount / rate);
 
     cout << "Czy chcesz policzyæ ponownie? (t/n) " << endl;
-    _getch();               // Pauza przed wyczyszczeniem konsoli
-    return false;
+    char ch = _getch();               // Pauza przed wyczyszczeniem konsoli
+    if(ch == 't')
+        return 0;
+    return 1;
 }
 
 void displayCurrencies()
