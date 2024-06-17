@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <set>
 //#include <json.hpp>
 #include "include/json.hpp"     //wersja powyzej mi sie nie kompiluje
 

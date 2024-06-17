@@ -34,10 +34,12 @@ void menuLoop() {
             break;
         }
         case '2': {
+            system("cls");
             displayCurrencies();
             break;
         }
         case '3': {
+            system("cls");
             displayInstructions();
             break;
         }
