@@ -54,7 +54,26 @@ void menuLoop() {
 
 void displayInstructions()
 {
-    cout << "Instrukcja u¿ytkownika..." << endl;  // Wyœwietla instrukcjê
+    string instrukcja= "                     \n"
+        "                                          Instrukcja u¿ytkownika\n"
+        "\n"
+        "OPCJA 1\n"
+        "Po wybraniu w menu opcji 1 (wciœniêciu klawisza 1) wyœwietli siê kalkulator, który zawiera dwa pola tekstowe oraz przycisk Policz. Pola tekstowe obs³ugiwane s¹ za pomoc¹ klawiatury, pole wybierane jest za pomoc¹ strza³em (lewa lub prawa), obs³uguj¹ one wpisywanie i kasowaæ dane w taki sam sposób jak w ka¿dym edytorze tekstu. W pierwszym polu nale¿y podaæ kwotê(np.100), natomiast w drugim polu skrót waluty z jakiej chcemy przeliczyæ pieni¹dze (np. PLN).\n"
+        "Po podaniu danych nale¿y przejechaæ strza³k¹ na przycisk Policz, a program wyœwietli przeliczone kwoty dla PLN, EUR, GBP i USD.\n"
+        "Na koniec mo¿emy zdecydowaæ czy chcemy dalej korzystaæ z kalkulatora \n"
+        "(po wciœniêciu klawisza „t” bêdziemy mogli ponownie wpisaæ dane, \n"
+        "po wciœniêciu „n” zostaniemy przekierowani do menu).\n"
+        "\n"
+        "OPCJA 2\n"
+        "Po wybraniu w menu opcji 2 (wciœniêciu klawisza 2) wyœwietlone zostan¹ wszystkie kurs walut które zosta³y przechwycone z API, aby powróciæ do menu nale¿y wcisn¹æ dowolny klawisz\n"
+        "\n"
+        "OPCJA 3\n"
+        "Po wybraniu w menu opcji 3 (wciœniêciu klawisza 3) wyœwietlona zostanie instukcja u¿ytkowania, aby powróciæ do menu nale¿y wcisn¹æ dowolny klawisz\n"
+        "\n"
+        "OPCJA 4\n"
+        "Po wybraniu w menu opcji 4 (wciœniêciu klawisza 4) aplikacja zostanie wy³¹czona\n\n";
+    cout << instrukcja;
     cout << "Wciœnij dowolny przycisk..." << endl;
     _getch();               // Pauza przed wyczyszczeniem konsoli
 }
+
