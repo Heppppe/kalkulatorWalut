@@ -10,45 +10,56 @@
 #define KEY_LEFT 1
 #define KEY_RIGHT 2
 
-void calculateCurrency()
-{
+void calculateCurrency() {
     bool calculating = true;
     bool misinput = false;
+    bool invalidAmount = false;
     int selected = 1;
     string amount = "1";
     string currency = "EUR";
-    while (calculating)
-    {
+
+    while (calculating) {
         system("cls");
-        if (misinput) {
-            cout << "Nieprawid³owa waluta lub brak kursu." << endl;
-            misinput = false;
-        }
+
         transform(currency.begin(), currency.end(), currency.begin(), [](unsigned char c) { return std::toupper(c); });
         calculateUI(selected, amount, currency);
 
+        if (misinput) {
+            cout << "\nNieprawid³owa waluta lub brak kursu." << endl;
+            misinput = false;
+        }
+        if (invalidAmount) {
+            cout << "\nPodano niepoprawn¹ kwotê." << endl;
+            invalidAmount = false;
+        }
 
         char input = _getch();
         char side;
-        switch (selected)
-        {
+        switch (selected) {
         case 3:
-            switch (input)
-            {
+            switch (input) {
             case 'à':
                 side = _getch();
                 if (side == 75)
                     selected = 2;
                 break;
             default:
-                misinput = policzButton(stod(amount), currency);
-                if (misinput == 1)
-                    calculating = false;
+                if (all_of(amount.begin(), amount.end(), ::isdigit)) {
+                    int result = policzButton(stod(amount), currency);
+                    if (result == -1) {
+                        misinput = true;
+                    }
+                    else if (result == 1) {
+                        calculating = false;
+                    }
+                }
+                else {
+                    invalidAmount = true;
+                }
             }
             break;
         case 2:
-            switch (input)
-            {
+            switch (input) {
             case 'à':
                 side = _getch();
                 if (side == 77)
@@ -61,24 +72,23 @@ void calculateCurrency()
                     currency.pop_back();
                 break;
             default:
-                if(currency.size() < 5)
+                if (currency.size() < 5)
                     currency += input;
             }
             break;
         case 1:
-            switch (input)
-            {
+            switch (input) {
             case 'à':
                 side = _getch();
                 if (side == 77)
                     selected = 2;
                 break;
             case '\b':
-                if(amount.size() > 0)
+                if (amount.size() > 0)
                     amount.pop_back();
                 break;
             default:
-                if(amount.size() < 9)
+                if (amount.size() < 9 && (isdigit(input) || input == '.'))
                     amount += input;
             }
             break;
