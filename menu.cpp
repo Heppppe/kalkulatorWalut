@@ -58,7 +58,7 @@ void displayInstructions()
         "                                          Instrukcja u¿ytkownika\n"
         "\n"
         "OPCJA 1\n"
-        "Po wybraniu w menu opcji 1 (wciœniêciu klawisza 1) wyœwietli siê kalkulator, który zawiera dwa pola tekstowe oraz przycisk Policz. Pola tekstowe obs³ugiwane s¹ za pomoc¹ klawiatury, pole wybierane jest za pomoc¹ strza³em (lewa lub prawa), obs³uguj¹ one wpisywanie i kasowaæ dane w taki sam sposób jak w ka¿dym edytorze tekstu. W pierwszym polu nale¿y podaæ kwotê(np.100), natomiast w drugim polu skrót waluty z jakiej chcemy przeliczyæ pieni¹dze (np. PLN).\n"
+        "Po wybraniu w menu opcji 1 (wciœniêciu klawisza 1) wyœwietli siê kalkulator, który zawiera trzy pola tekstowe oraz przycisk Policz. Pola tekstowe obs³ugiwane s¹ za pomoc¹ klawiatury, pole wybierane jest za pomoc¹ strza³em (lewa lub prawa), obs³uguj¹ one wpisywanie i kasowaæ dane w taki sam sposób jak w ka¿dym edytorze tekstu. W pierwszym polu nale¿y podaæ kwotê(np.100), w drugim skrót waluty z jakiej chcemy przeliczyæ pieni¹dze (np. PLN), a w trzecim docelow¹ walutê\n"
         "Po podaniu danych nale¿y przejechaæ strza³k¹ na przycisk Policz, a program wyœwietli przeliczone kwoty dla PLN, EUR, GBP i USD."
         "Na koniec mo¿emy zdecydowaæ czy chcemy dalej korzystaæ z kalkulatora"
         "(po wciœniêciu klawisza „t” bêdziemy mogli ponownie wpisaæ dane,"
