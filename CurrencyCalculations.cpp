@@ -16,13 +16,15 @@ void calculateCurrency() {
     bool invalidAmount = false;
     int selected = 1;
     string amount = "1";
-    string currency = "EUR";
+    string currency = "PLN";
+    string secondCurrency = "EUR";
 
     while (calculating) {
         system("cls");
 
         transform(currency.begin(), currency.end(), currency.begin(), [](unsigned char c) { return std::toupper(c); });
-        calculateUI(selected, amount, currency);
+        transform(secondCurrency.begin(), secondCurrency.end(), secondCurrency.begin(), [](unsigned char c) { return std::toupper(c); });
+        calculateUI(selected, amount, currency, secondCurrency);
 
         if (misinput) {
             cout << "\nNieprawid³owa waluta lub brak kursu." << endl;
@@ -36,16 +38,34 @@ void calculateCurrency() {
         char input = _getch();
         char side;
         switch (selected) {
+        case 4:
+            switch (input) {
+            case 'à':
+                side = _getch();
+                if (side == 75)
+                    selected = 3;
+                break;
+            case '\b':
+                if (secondCurrency.size() > 0)
+                    secondCurrency.pop_back();
+                break;
+            default:
+                if (secondCurrency.size() < 5)
+                    secondCurrency += input;
+            }
+            break;
         case 3:
             switch (input) {
             case 'à':
                 side = _getch();
+                if (side == 77)
+                    selected = 4;
                 if (side == 75)
                     selected = 2;
                 break;
             default:
                 if (all_of(amount.begin(), amount.end(), ::isdigit)) {
-                    int result = policzButton(stod(amount), currency);
+                    int result = policzButton(stod(amount), currency, secondCurrency);
                     if (result == -1) {
                         misinput = true;
                     }
@@ -101,14 +121,14 @@ void calculateCurrency() {
     }
 }
 
-int policzButton(double amount, string currency)
+int policzButton(double amount, string currency, string secondCurrency)
 {
-    double rate = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
-    if (rate == 0.0) {
+    double rate1 = apiobj.getJSONParser().getRate(currency);  // Pobiera kurs waluty
+    double rate2 = apiobj.getJSONParser().getRate(secondCurrency);  // Pobiera kurs waluty docelowej
+    if (rate1 == 0.0 || rate2 == 0.0) {
         return -1;
     }
-    cout << endl << amount << " " << currency << " jest warte: " << endl;
-    apiobj.getJSONParser().exchangeToAllCurrencies(amount / rate);
+    cout << endl << amount << " " << currency << " = " << amount * rate2 / rate1 << ' ' << secondCurrency << endl << endl;
 
     cout << "Czy chcesz policzyæ ponownie? (t/n) " << endl;
     char ch = _getch();               // Pauza przed wyczyszczeniem konsoli

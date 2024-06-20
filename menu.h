@@ -8,5 +8,5 @@ void displayMenu();
 void calculateCurrency();
 void displayCurrencies();
 void displayInstructions();
-void calculateUI(int, string, string);
-int policzButton(double, string);
+void calculateUI(int, string, string, string);
+int policzButton(double, string, string);
