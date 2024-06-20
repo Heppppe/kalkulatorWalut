@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <set>
+#include <iomanip> 
 //#include <json.hpp>
 #include "include/json.hpp"     //wersja powyzej mi sie nie kompiluje
 
@@ -16,6 +17,6 @@ public:
     JSON();  // Konstruktor
     void jparse(const string& response);  // Metoda do parsowania danych JSON
     void displayRates() const;  // Metoda do wyœwietlania kursów walut
-    void exchangeToAllCurrencies(double) const;
+    void exchangeToDefaultCurrencies(double) const;
     double getRate(const string& currency) const;  // Metoda do uzyskania kursu waluty
 };

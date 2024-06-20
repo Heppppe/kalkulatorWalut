@@ -5,10 +5,11 @@
 #include "api.h"
 #include "JSON.h"
 #include <cctype>
-
+#include <iomanip> // Dodano do zaokr¹glania wyników
 
 #define KEY_LEFT 1
 #define KEY_RIGHT 2
+#define ESC 27
 
 void calculateCurrency() {
     bool calculating = true;
@@ -36,6 +37,7 @@ void calculateCurrency() {
         }
 
         char input = _getch();
+        if (input == ESC) continue;  // Ignoruj klawisz ESC
         char side;
         switch (selected) {
         case 4:
@@ -64,8 +66,9 @@ void calculateCurrency() {
                     selected = 2;
                 break;
             default:
-                if (all_of(amount.begin(), amount.end(), ::isdigit)) {
-                    int result = policzButton(stod(amount), currency, secondCurrency);
+                try {
+                    double amountValue = stod(amount);
+                    int result = policzButton(amountValue, currency, secondCurrency);
                     if (result == -1) {
                         misinput = true;
                     }
@@ -73,7 +76,7 @@ void calculateCurrency() {
                         calculating = false;
                     }
                 }
-                else {
+                catch (const invalid_argument&) {
                     invalidAmount = true;
                 }
             }
@@ -108,7 +111,7 @@ void calculateCurrency() {
                     amount.pop_back();
                 break;
             default:
-                if (amount.size() < 9 && (isdigit(input) || input == '.'))
+                if (amount.size() < 9 && (isdigit(input) || input == '.' || (input == '-' && amount.empty())))
                     amount += input;
             }
             break;
@@ -128,11 +131,13 @@ int policzButton(double amount, string currency, string secondCurrency)
     if (rate1 == 0.0 || rate2 == 0.0) {
         return -1;
     }
-    cout << endl << amount << " " << currency << " = " << amount * rate2 / rate1 << ' ' << secondCurrency << endl << endl;
+    double result = amount * rate2 / rate1;
+    cout << fixed << setprecision(2);  // Ustawia precyzjê na 2 miejsca po przecinku
+    cout << endl << amount << " " << currency << " = " << result << ' ' << secondCurrency << endl << endl;
 
     cout << "Czy chcesz policzyæ ponownie? (t/n) " << endl;
-    char ch = _getch();               // Pauza przed wyczyszczeniem konsoli
-    if(ch == 't')
+    char ch = _getch();  // Pauza przed wyczyszczeniem konsoli
+    if (ch == 't')
         return 0;
     return 1;
 }
@@ -141,5 +146,5 @@ void displayCurrencies()
 {
     apiobj.getJSONParser().displayRates();  // Wyœwietla kursy walut
     cout << "Wciœnij dowolny przycisk..." << endl;
-    _getch();               // Pauza przed wyczyszczeniem konsoli
+    _getch();  // Pauza przed wyczyszczeniem konsoli
 }

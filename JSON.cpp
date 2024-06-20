@@ -20,11 +20,12 @@ double JSON::getRate(const string& currency) const {
     return 0.0;  // Zwraca 0.0, jeœli waluta nie istnieje
 }
 
-void JSON::exchangeToAllCurrencies(double dollars) const {
+void JSON::exchangeToDefaultCurrencies(double dollars) const {
     set<string> desiredCurrencies = { "PLN", "USD", "EUR", "GBP" };                     // Zbiór walut do wyœwietlenia
     for (auto it = jsonData["rates"].begin(); it != jsonData["rates"].end(); ++it) {    // Iteruje przez kursy walut
         if (desiredCurrencies.find(it.key()) != desiredCurrencies.end())                // Warunek sprawdzaj¹cy czy w obiekcie JSON znajduj¹ siê podane waluty
         {
+            cout << fixed << setprecision(2);
             cout << dollars * (double)it.value() << " " << it.key() << endl;  // Wyœwietla wartosc wpisanej kwoty w inneych walutach
         }
     }
