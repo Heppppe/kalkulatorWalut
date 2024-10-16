@@ -7,18 +7,18 @@
 using namespace std;
 
 // Definicja globalnego obiektu API
-API apiobj("13c8bdeb1c144ec3b3f4422ab3a04f9a");
+API apiobj("Your API key");
 
 int main() {
-    setlocale(LC_CTYPE, "Polish");  // Pozwala wyœwietlaæ polskie znaki w konsoli
+    setlocale(LC_CTYPE, "Polish");  // Pozwala wyÅ›wietlaÄ‡ polskie znaki w konsoli
 
-    cout << "Pobieranie aktualnych kursów..." << endl;
+    cout << "Pobieranie aktualnych kursÃ³w..." << endl;
     
     if (apiobj.fetchRates()) {  // Pobiera kursy walut i sprawdza powodzenie operacji
-        menuLoop();  // Przejœcie do menu
+        menuLoop();  // PrzejÅ›cie do menu
     }
     else {
-        cout << "Wyst¹pi³ b³¹d przy pobieraniu." << endl;  // Informuje o b³êdzie podczas pobierania
+        cout << "WystÄ…piÅ‚ bÅ‚Ä…d przy pobieraniu." << endl;  // Informuje o bÅ‚Ä™dzie podczas pobierania
     }
     
     return 0;
